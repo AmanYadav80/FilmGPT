@@ -1,16 +1,15 @@
-import { useRef, useState } from "react";
+import {  useRef, useState } from "react";
 import Header from "./Header";
 import { Validate } from "../utils/Validate";
 import { auth } from "../utils/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 const Login=()=>{
     const dispatch=useDispatch();
     const [isSignIn,setIsSignIn]=useState(true);
     const [errorMsg,setErrorMsg]=useState(null)
-    const navigate=useNavigate();
+    // const navigate=useNavigate();
     const email=useRef(null);
     const pass=useRef(null);
     const name=useRef(null);
@@ -18,6 +17,7 @@ const Login=()=>{
     const handleClick=()=>{
         setIsSignIn(!isSignIn);
     }
+  
     const handleValidate=()=>{
       const message=Validate(email.current.value,pass.current.value) 
       setErrorMsg(message);
@@ -33,7 +33,7 @@ const Login=()=>{
           }).then(() => {
             const { uid, email, displayName}=auth.currentUser;
             dispatch(addUser({uid:uid,email:email,displayName:displayName}));
-            navigate("/browse")
+            // navigate("/browse")
           }).catch((error) => {
             setErrorMsg(error.message)
           });
@@ -52,7 +52,7 @@ const Login=()=>{
           // Signed in 
           const user = userCredential.user;
           // console.log(user);
-          navigate("/browse")
+          // navigate("/browse")
         })
         .catch((error) => {
           const errorCode = error.code;
